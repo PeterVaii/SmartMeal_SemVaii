@@ -2,7 +2,7 @@
 
 namespace App;
 
-use Framework\Auth\DummyAuthenticator;
+use Framework\Auth\DbAuthenticator;
 use Framework\Core\ErrorHandler;
 use Framework\DB\DefaultConventions;
 
@@ -35,7 +35,7 @@ class Configuration
     public const DB_PASS = 'dtb456'; // Password for database access (defined in docker/.env)
 
     /**
-     * URL for the login page. Users will be redirected here if authentication is required for an action.
+     * URL for the login page. User will be redirected here if authentication is required for an action.
      */
     public const LOGIN_URL = '?c=auth&a=login';
 
@@ -66,7 +66,7 @@ class Configuration
      * Class name for the authenticator. This class must implement the IAuthenticator interface. Comment out this line
      * if authentication is not required in the application.
      */
-    public const AUTH_CLASS = DummyAuthenticator::class;
+    public const AUTH_CLASS = DbAuthenticator::class;
 
     /**
      * Class name for the error handler. This class must implement the IHandleError interface.

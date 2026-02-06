@@ -78,5 +78,4 @@ abstract class SessionAuthenticator implements IAuthenticator
         }
         return new AppUser($identity);
     }
-
 }
