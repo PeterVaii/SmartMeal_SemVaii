@@ -56,6 +56,11 @@ class AppUser
         return $this->identity?->getName();
     }
 
+    public function getId(): ?int
+    {
+        return $this->identity?->getId();
+    }
+
     /**
      * Magic method to forward calls to the identity object if it exists.
      *

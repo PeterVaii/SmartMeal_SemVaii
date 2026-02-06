@@ -13,5 +13,7 @@ namespace Framework\Core;
 interface IIdentity
 {
     public function getName(): string;
+
+    public function getId(): int;
 }
 
