@@ -1,39 +1,60 @@
 <?php
+/** @var AppUser $user */
+/** @var LinkGenerator $link */
 
-/** @var \Framework\Support\LinkGenerator $link */
+use Framework\Auth\AppUser;
+use Framework\Support\LinkGenerator;
 ?>
 
-<div class="container-fluid">
-    <div class="row">
-        <div class="col mt-5">
-            <div class="text-center">
-                <h2>Vaííčko MVC FW</h2>
-                <h3>Version <?= App\Configuration::FW_VERSION ?></h3>
-                <img src="<?= $link->asset('images/vaiicko_logo.png') ?>" alt="Framework Logo">
-                <p>
-                    Congratulations, you have successfully installed and run the framework
-                    <strong>Vaííčko</strong> <?= App\Configuration::FW_VERSION ?>!<br>
-                    We hope that you will create a great application using this framework.<br>
-                </p>
-                <p>
-                    This simple framework was created for teaching purposes and to better understand how the MVC
-                    architecture works.<br>
-                    It is intended for students of the subject <em>web application development</em>, but not only
-                    for them.
-                </p>
+<div class="container">
+    <div class="mb-4">
+        <h1 class="fw-bold">SmartMeal</h1>
+        <p class="text-muted mb-0">Plánuj jedlá, ukladaj recepty a maj nákupy pod kontrolou.</p>
+    </div>
+
+    <?php if (!$user->isLoggedIn()) { ?>
+        <div class="alert alert-info d-flex align-items-center gap-2 home-alert" role="alert">
+            <span>👀 Recepty si môžeš pozerať aj bez prihlásenia. Pre jedálny plán a nákupný zoznam sa prihlás.</span>
+        </div>
+
+        <div class="d-flex gap-2 mb-4">
+            <a class="btn btn-primary" href="<?= $link->url('recipes.index') ?>">Pozrieť recepty</a>
+        </div>
+    <?php } else { ?>
+        <div class="row g-3">
+            <div class="col-md-4">
+                <div class="card h-100 home-card">
+                    <div class="card-body">
+                        <h5 class="card-title">🍲 Recepty</h5>
+                        <p class="card-text text-muted">Prehliadaj recepty alebo pridaj nový.</p>
+                        <a class="btn btn-outline-primary btn-sm" href="<?= $link->url('recipes.index') ?>">Otvoriť recepty</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card h-100 home-card">
+                    <div class="card-body">
+                        <h5 class="card-title">📅 Jedálny plán</h5>
+                        <p class="card-text text-muted">Naplánuj si jedlá na celý týždeň.</p>
+                        <a class="btn btn-outline-primary btn-sm" href="<?= $link->url('mealplan.index') ?>">Naplánovať</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card h-100 home-card">
+                    <div class="card-body">
+                        <h5 class="card-title">🛒 Nákupný zoznam</h5>
+                        <p class="card-text text-muted">Maj všetky nákupy na jednom mieste.</p>
+                        <a class="btn btn-outline-primary btn-sm" href="<?= $link->url('shoppinglist.index') ?>">Otvoriť zoznam</a>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="row mt-3">
-        <div class="col text-center">
-            <h4>Authors</h4>
-            <div>
-                <a href="mailto:Patrik.Hrkut@fri.uniza.sk">doc. Ing. Patrik Hrkút, PhD.</a><br>
-                <a href="mailto:Michal.Duracik@fri.uniza.sk">Ing. Michal Ďuračík, PhD.</a><br>
-                <a href="mailto:Matej.Mesko@fri.uniza.sk">Ing. Matej Meško, PhD.</a><br><br>
-                &copy; 2020-<?= date('Y') ?> University of Žilina, Faculty of Management Science and Informatics,
-                Department of Software Technologies
-            </div>
+
+        <div class="alert alert-info mt-4 home-alert">
+            💡 Tip: Naplánuj si jedlá na celý týždeň a ušetríš čas aj peniaze.
         </div>
-    </div>
+    <?php } ?>
 </div>
