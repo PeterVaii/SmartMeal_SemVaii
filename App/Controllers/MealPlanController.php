@@ -26,4 +26,45 @@ class MealPlanController extends BaseController
 
         return $this->html(compact('plans', 'recipes'));
     }
+
+    /**
+     * @throws Exception
+     */
+    public function add(Request $request): Response
+    {
+        if (!$this->user->isLoggedIn()) {
+            return $this->redirect(Configuration::LOGIN_URL);
+        }
+
+        $day = (string)$request->value('day');
+        $recipeId = (int)$request->value('recipe_id');
+
+        $mp = new MealPlan();
+        $mp->setUserId($this->user->getId());
+        $mp->setRecipeId($recipeId);
+        $mp->setDay($day);
+        $mp->save();
+
+        return $this->redirect($this->url('mealplan.index'));
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function remove(Request $request): Response
+    {
+        if (!$this->user->isLoggedIn()) {
+            return $this->redirect(Configuration::LOGIN_URL);
+        }
+
+        $id = (int)$request->value('id');
+        $mp = MealPlan::getOne($id);
+
+        if ($mp === null || $mp->getUserId() !== $this->user->getId()) {
+            return $this->redirect($this->url('mealplan.index'));
+        }
+
+        $mp->delete();
+        return $this->redirect($this->url('mealplan.index'));
+    }
 }
