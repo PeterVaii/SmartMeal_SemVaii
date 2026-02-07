@@ -5,7 +5,6 @@
 
 use Framework\Auth\AppUser;
 use Framework\Support\LinkGenerator;
-
 ?>
 
 <div class="container page-narrow">

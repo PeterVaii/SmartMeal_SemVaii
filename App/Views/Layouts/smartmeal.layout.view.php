@@ -1,7 +1,10 @@
 <?php
 /** @var string $contentHTML */
-/** @var \Framework\Auth\AppUser $user */
-/** @var \Framework\Support\LinkGenerator $link */
+/** @var AppUser $user */
+/** @var LinkGenerator $link */
+
+use Framework\Auth\AppUser;
+use Framework\Support\LinkGenerator;
 ?>
 
 <!DOCTYPE html>
@@ -46,7 +49,7 @@
                         <a class="nav-link" href="<?= $link->url('mealplan.index') ?>">Jedálny plán</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= $link->url('shoppinglist.index') ?>">Nákupný zoznam</a>
+                        <a class="nav-link" href="<?= $link->url('shoppingitem.index') ?>">Nákupný zoznam</a>
                     </li>
                 <?php } ?>
             </ul>

@@ -47,7 +47,7 @@ use Framework\Support\LinkGenerator;
                     <div class="card-body">
                         <h5 class="card-title">🛒 Nákupný zoznam</h5>
                         <p class="card-text text-muted">Maj všetky nákupy na jednom mieste.</p>
-                        <a class="btn btn-outline-primary btn-sm" href="<?= $link->url('shoppinglist.index') ?>">Otvoriť zoznam</a>
+                        <a class="btn btn-outline-primary btn-sm" href="<?= $link->url('shoppingitem.index') ?>">Otvoriť zoznam</a>
                     </div>
                 </div>
             </div>

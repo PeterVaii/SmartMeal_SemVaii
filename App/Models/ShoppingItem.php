@@ -17,7 +17,7 @@ class ShoppingItem extends Model
     public function getUserId(): int { return $this->user_id; }
     public function getName(): string { return $this->name; }
     public function getUnit(): ?string { return $this->unit; }
-    public function isChecked(): bool { return (bool)$this->is_checked; }
+    public function getIsChecked(): bool { return (bool)$this->is_checked; }
 
     public function setUserId(int $user_id): void { $this->user_id = $user_id; }
     public function setName(string $name): void { $this->name = $name; }

@@ -5,3 +5,12 @@
 .navbar-brand img {
     width: 50px;
 }
+
+.shopping-item.checked {
+    background-color: #f8f9fa;
+}
+
+.shopping-item.checked span {
+    text-decoration: line-through;
+    color: #6c757d;
+}
