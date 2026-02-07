@@ -67,7 +67,7 @@ class AuthController extends BaseController
      * @return ViewResponse The response object that renders the logout view.
      * @throws Exception
      */
-    public function logout(Request $request): Response
+    public function logout(): Response
     {
         $this->app->getAuthenticator()->logout();
         return $this->redirect($this->url("home.index"));
