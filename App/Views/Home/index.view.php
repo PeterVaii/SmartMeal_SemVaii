@@ -18,7 +18,7 @@ use Framework\Support\LinkGenerator;
         </div>
 
         <div class="d-flex gap-2 mb-4">
-            <a class="btn btn-primary" href="<?= $link->url('recipes.index') ?>">Pozrieť recepty</a>
+            <a class="btn btn-primary" href="<?= $link->url('recipe.index') ?>">Pozrieť recepty</a>
         </div>
     <?php } else { ?>
         <div class="row g-3">
@@ -27,7 +27,7 @@ use Framework\Support\LinkGenerator;
                     <div class="card-body">
                         <h5 class="card-title">🍲 Recepty</h5>
                         <p class="card-text text-muted">Prehliadaj recepty alebo pridaj nový.</p>
-                        <a class="btn btn-outline-primary btn-sm" href="<?= $link->url('recipes.index') ?>">Otvoriť recepty</a>
+                        <a class="btn btn-outline-primary btn-sm" href="<?= $link->url('recipe.index') ?>">Otvoriť recepty</a>
                     </div>
                 </div>
             </div>

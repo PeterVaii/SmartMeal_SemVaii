@@ -8,7 +8,7 @@ use Framework\Core\BaseController;
 use Framework\Http\Request;
 use Framework\Http\Responses\Response;
 
-class RecipesController extends BaseController
+class RecipeController extends BaseController
 {
     /**
      * @throws Exception
