@@ -25,14 +25,16 @@ class Recipe extends Model
     public function getPrepTime(): ?int { return $this->prep_time; }
     public function getServings(): ?int { return $this->servings; }
     public function getDifficulty(): string { return $this->difficulty; }
-    public function getIsPublic(): bool { return (int)$this->is_public === 1; }
+    public function getIsPublic(): bool { return $this->is_public === 1; }
+    public function getCreatedAt(): ?string { return $this->created_at; }
 
     public function setUserId(int $userId): void { $this->user_id = $userId; }
     public function setTitle(string $title): void { $this->title = $title; }
     public function setDescription(?string $description): void { $this->description = $description; }
     public function setInstructions(string $instructions): void { $this->instructions = $instructions; }
-    public function setPrepTime(?int $v): void { $this->prep_time = $v; }
-    public function setServings(?int $v): void { $this->servings = $v; }
-    public function setDifficulty(string $v): void { $this->difficulty = $v; }
+    public function setPrepTime(?int $prep_time): void { $this->prep_time = $prep_time; }
+    public function setServings(?int $servings): void { $this->servings = $servings; }
+    public function setDifficulty(string $difficulty): void { $this->difficulty = $difficulty; }
     public function setPublic(bool $isPublic): void { $this->is_public = $isPublic ? 1 : 0; }
+    public function setCreatedAt(?string $created_at): void { $this->created_at = $created_at; }
 }

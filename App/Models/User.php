@@ -20,6 +20,6 @@ class User extends Model
 
     public function setUsername(string $username): void { $this->username = $username; }
     public function setPasswordHash(string $hash): void { $this->password_hash = $hash; }
-    public function setCreatedAt(string $createdAt): void { $this->created_at = $createdAt; }
+    public function setCreatedAt(?string $createdAt): void { $this->created_at = $createdAt; }
     public function setEmail(?string $email): void { $this->email = $email; }
 }
