@@ -85,22 +85,10 @@ class RecipeController extends BaseController
      */
     public function edit(Request $request): Response
     {
-        if (!$this->user->isLoggedIn()) {
-            return $this->redirect(Configuration::LOGIN_URL);
-        }
+        $recipe = $this->requireOwnedRecipe($request);
+        $recipeId = (int)$recipe->getId();
 
-        $id = (int)$request->value('id');
-        $recipe = Recipe::getOne($id);
-
-        if ($recipe === null) {
-            return $this->redirect($this->url('recipe.index'));
-        }
-
-        if ($recipe->getUserId() !== $this->user->getId()) {
-            return $this->redirect("?c=recipe&a=show&id=" . $id);
-        }
-
-        $ingredients = RecipeIngredient::getAll('`recipe_id` = ?', [$id], orderBy: '`id` asc');
+        $ingredients = RecipeIngredient::getAll('`recipe_id` = ?', [$recipeId], orderBy: '`id` asc');
 
         $message = null;
 
@@ -116,10 +104,20 @@ class RecipeController extends BaseController
                     $old->delete();
                 }
 
-                return $this->saveIngredientsAndRedirect($request, $id);
+                return $this->saveIngredientsAndRedirect($request, $recipeId);
             }
         }
         return $this->html(compact('recipe', 'ingredients', 'message'));
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function delete(Request $request): Response
+    {
+        $recipe = $this->requireOwnedRecipe($request);
+        $recipe->delete();
+        return $this->redirect($this->url('recipe.index'));
     }
 
     private function parseRecipeFields(Request $request): array
@@ -200,5 +198,30 @@ class RecipeController extends BaseController
         $recipe->setDifficulty($data['difficulty']);
 
         $recipe->save();
+    }
+
+    /**
+     * @throws Exception
+     */
+    private function requireOwnedRecipe(Request $request): Recipe
+    {
+        if (!$this->user->isLoggedIn()) {
+            $this->redirect(Configuration::LOGIN_URL);
+            exit;
+        }
+
+        $id = (int)$request->value('id');
+        $recipe = Recipe::getOne($id);
+
+        if ($recipe === null) {
+            $this->redirect($this->url('recipe.index'));
+            exit;
+        }
+
+        if ($recipe->getUserId() !== $this->user->getId()) {
+            $this->redirect("?c=recipe&a=show&id=" . $id);
+            exit;
+        }
+        return $recipe;
     }
 }
