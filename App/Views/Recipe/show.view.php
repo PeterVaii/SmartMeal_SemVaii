@@ -8,7 +8,7 @@ use App\Models\Recipe;
 use Framework\Auth\AppUser;
 use Framework\Support\LinkGenerator;
 ?>
-
+<!--Pomáhanie s dizajnom ChatGPT-->
 <div class="container">
     <div class="mb-3">
         <a class="text-decoration-none" href="<?= $link->url('recipe.index') ?>">← Späť na recepty</a>

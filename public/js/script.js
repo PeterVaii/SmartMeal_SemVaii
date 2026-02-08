@@ -1,3 +1,4 @@
+//Pomáhanie ChatGPT
 document.addEventListener('DOMContentLoaded', () => {
     {
         const list = document.getElementById('ingredients-list');

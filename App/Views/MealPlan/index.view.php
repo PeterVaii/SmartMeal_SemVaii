@@ -22,7 +22,7 @@ foreach ($plans as $p) {
     $plansByDay[$p->getDay()][] = $p;
 }
 ?>
-
+<!--Pomáhanie s dizajnom ChatGPT-->
 <div class="container page-narrow">
     <h1 class="fw-bold mb-3">Jedálny plán</h1>
 

@@ -10,6 +10,7 @@ use Framework\Http\Request;
 use Framework\Http\Responses\Response;
 use App\Models\ShoppingItem;
 
+//Pomáhanie ChatGPT
 class ShoppingItemController extends BaseController
 {
     public function authorize(Request $request, string $action): bool

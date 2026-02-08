@@ -7,6 +7,7 @@ use Framework\Core\App;
 use Framework\Core\IIdentity;
 use App\Models\User;
 
+//Pomáhanie ChatGPT
 class DbAuthenticator extends SessionAuthenticator
 {
     public function __construct(App $app)

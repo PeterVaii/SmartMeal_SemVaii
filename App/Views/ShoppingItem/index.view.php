@@ -5,7 +5,7 @@
 
 use Framework\Support\LinkGenerator;
 ?>
-
+<!--Pomáhanie s dizajnom ChatGPT-->
 <div class="container page-narrow">
     <h1 class="fw-bold mb-3">Nákupný zoznam</h1>
 

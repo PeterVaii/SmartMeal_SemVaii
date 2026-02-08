@@ -9,6 +9,7 @@ use Framework\Core\BaseController;
 use Framework\Http\Request;
 use Framework\Http\Responses\Response;
 
+//Pomáhanie ChatGPT
 class AuthController extends BaseController
 {
     public function authorize(Request $request, string $action): bool

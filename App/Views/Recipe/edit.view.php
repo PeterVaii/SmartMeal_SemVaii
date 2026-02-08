@@ -12,7 +12,7 @@ use Framework\Support\LinkGenerator;
 
 $e = fn($v) => htmlspecialchars((string)$v, ENT_QUOTES, 'UTF-8');
 ?>
-
+<!--Pomáhanie s dizajnom ChatGPT-->
 <div class="container page-narrow">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h1 class="fw-bold mb-0">Upraviť recept</h1>

@@ -6,7 +6,7 @@
 use Framework\Auth\AppUser;
 use Framework\Support\LinkGenerator;
 ?>
-
+<!--Pomáhanie s dizajnom ChatGPT-->
 <div class="container">
     <div class="d-flex justify-content-between align-items-center mb-2">
         <h1 class="fw-bold mb-0">Recepty</h1>

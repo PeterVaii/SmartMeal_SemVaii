@@ -5,7 +5,7 @@
 use Framework\Auth\AppUser;
 use Framework\Support\LinkGenerator;
 ?>
-
+<!--Pomáhanie s dizajnom ChatGPT-->
 <div class="container">
     <div class="mb-4">
         <h1 class="fw-bold">SmartMeal</h1>

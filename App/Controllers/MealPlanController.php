@@ -9,6 +9,7 @@ use Framework\Core\BaseController;
 use Framework\Http\Request;
 use Framework\Http\Responses\Response;
 
+//Pomáhanie ChatGPT
 class MealPlanController extends BaseController
 {
     /**

@@ -6,7 +6,7 @@
 use Framework\Auth\AppUser;
 use Framework\Support\LinkGenerator;
 ?>
-
+<!--Pomáhanie s dizajnom ChatGPT-->
 <!DOCTYPE html>
 <html lang="sk">
 <head>

@@ -11,6 +11,7 @@ use Framework\Http\Request;
 use Framework\Http\Responses\RedirectResponse;
 use Framework\Http\Responses\Response;
 
+//Pomáhanie ChatGPT
 class RecipeController extends BaseController
 {
     /**
