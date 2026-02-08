@@ -15,6 +15,28 @@ class MealPlanController extends BaseController
     /**
      * @throws Exception
      */
+    public function authorize(Request $request, string $action): bool
+    {
+        if (!$this->user->isLoggedIn()) {
+            return false;
+        }
+
+        switch ($action) {
+            case 'index':
+            case 'add':
+                return true;
+            case 'remove':
+                $id = (int)$request->value('id');
+                $mp = MealPlan::getOne($id);
+                return $mp !== null && ($mp->getUserId() === (int)$this->user->getId());
+            default:
+                return false;
+        }
+    }
+
+    /**
+     * @throws Exception
+     */
     public function index(Request $request): Response
     {
         if (!$this->user->isLoggedIn()) {
