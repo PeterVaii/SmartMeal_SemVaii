@@ -120,6 +120,39 @@ class RecipeController extends BaseController
         return $this->redirect($this->url('recipe.index'));
     }
 
+    /**
+     * @throws Exception
+     */
+    public function search(Request $request): Response
+    {
+        $q = trim((string)($request->value('q') ?? ''));
+        $qLike = '%' . $q . '%';
+
+        $where = '`is_public` = 1';
+        $params = [];
+
+        if ($this->user->isLoggedIn()) {
+            $where = '(`is_public` = 1 OR `user_id` = ?)';
+            $params[] = (int)$this->user->getId();
+        }
+
+        if ($q !== '') {
+            $where .= ' AND `title` LIKE ?';
+            $params[] = $qLike;
+        }
+
+        $recipes = Recipe::getAll($where, $params, orderBy: '`created_at` DESC', limit: 30);
+
+        $out = array_map(fn($r) => [
+            'id' => (int)$r->getId(),
+            'title' => $r->getTitle(),
+            'description' => $r->getDescription(),
+            'is_public' => $r->getIsPublic(),
+        ], $recipes);
+
+        return $this->json(['ok' => true, 'items' => $out]);
+    }
+
     private function parseRecipeFields(Request $request): array
     {
         $title = trim((string)$request->value('title'));

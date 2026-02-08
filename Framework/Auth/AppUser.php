@@ -2,6 +2,7 @@
 
 namespace Framework\Auth;
 
+use BadMethodCallException;
 use Framework\Core\IIdentity;
 
 /**
@@ -67,16 +68,16 @@ class AppUser
      * @param string $name The method name being called.
      * @param array $arguments The arguments passed to the method.
      * @return mixed The result of the method call on the identity object.
-     * @throws \BadMethodCallException If the method does not exist on the identity.
+     * @throws BadMethodCallException If the method does not exist on the identity.
      */
     public function __call(string $name, array $arguments)
     {
         if ($this->identity === null) {
-            throw new \BadMethodCallException("Cannot call method {$name} when user is not logged in.");
+            throw new BadMethodCallException("Cannot call method $name when user is not logged in.");
         }
         if (method_exists($this->identity, $name)) {
             return $this->identity->$name(...$arguments);
         }
-        throw new \BadMethodCallException("Method {$name} does not exist on current identity.");
+        throw new BadMethodCallException("Method $name does not exist on current identity.");
     }
 }

@@ -1,58 +1,147 @@
 document.addEventListener('DOMContentLoaded', () => {
     {
         const list = document.getElementById('ingredients-list');
-        const tpl  = document.getElementById('ingredient-row-template');
-        const add  = document.getElementById('add-ingredient');
+        const template = document.getElementById('ingredient-row-template');
+        const addButton = document.getElementById('add-ingredient');
 
-        // ak nie sme na stránke receptu, preskoč
-        if (list && tpl && add) {
-            add.addEventListener('click', () => {
-                list.appendChild(tpl.content.cloneNode(true));
+        if (list && template && addButton) {
+            addButton.addEventListener('click', function () {
+                const newRow = template.content.cloneNode(true);
+                list.appendChild(newRow);
             });
 
-            list.addEventListener('click', (e) => {
-                if (!e.target.closest('.remove-ingredient')) return;
-                e.target.closest('.ingredient-row')?.remove();
+            list.addEventListener('click', function (event) {
+                const removeButton = event.target.closest('.remove-ingredient');
+                if (!removeButton) return;
+                const row = removeButton.closest('.ingredient-row');
+                if (row) row.remove();
             });
 
-            // ak je prázdne, pridaj 1 riadok (typicky create view)
-            if (list.children.length === 0) {
-                add.click();
-            }
+            if (list.children.length === 0) addButton.click();
         }
     }
 
     {
         const toggles = document.querySelectorAll('.shopping-toggle');
-        if (!toggles.length) return;
 
-        toggles.forEach(cb => {
-            cb.addEventListener('change', async () => {
-                const payload = {
-                    name: cb.dataset.name || '',
-                    unit: (cb.dataset.unit && cb.dataset.unit.trim() !== '') ? cb.dataset.unit : null,
-                    checked: cb.checked ? 1 : 0
-                };
+        if (toggles.length) {
+            toggles.forEach(function (checkbox) {
+                checkbox.addEventListener('change', async function () {
 
-                try {
-                    const res = await fetch('?c=shoppingItem&a=toggle', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json'
-                        },
-                        body: JSON.stringify(payload)
-                    });
+                    const payload = {
+                        name: checkbox.dataset.name || '',
+                        unit: (checkbox.dataset.unit && checkbox.dataset.unit.trim() !== '') ? checkbox.dataset.unit : null,
+                        checked: checkbox.checked ? 1 : 0
+                    };
 
-                    const data = await res.json();
-                    if (!res.ok || !data.ok) throw new Error(data.error || 'failed');
+                    try {
+                        const response = await fetch('?c=shoppingItem&a=toggle', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json'
+                            },
+                            body: JSON.stringify(payload)
+                        });
 
-                    cb.closest('.shopping-item')?.classList.toggle('checked', cb.checked);
-                } catch (e) {
-                    cb.checked = !cb.checked;
-                    alert('Nepodarilo sa uložiť. Skús znova.');
-                }
+                        const data = await response.json();
+
+                        if (!response.ok || data.ok !== true) throw new Error(data.error || 'failed');
+
+                        const itemElement = checkbox.closest('.shopping-item');
+                        if (itemElement) itemElement.classList.toggle('checked', checkbox.checked);
+                    } catch (error) {
+                        checkbox.checked = !checkbox.checked;
+                        alert('Nepodarilo sa uložiť. Skús znova.');
+                    }
+                });
             });
-        });
+        }
+    }
+
+    {
+        const input = document.getElementById('recipe-search');
+        const list  = document.getElementById('recipes-list');
+
+        if (input && list) {
+            let timer = null;
+
+            function escapeHtml(value) {
+                const text = String(value ?? '');
+
+                return text.replace(/[&<>"']/g, function (match) {
+                    const map = {
+                        '&': '&amp;',
+                        '<': '&lt;',
+                        '>': '&gt;',
+                        '"': '&quot;',
+                        "'": '&#039;'
+                    };
+                    return map[match];
+                });
+            }
+
+            function render(items) {
+                let resultHtml = '';
+
+                items.forEach(function (recipe) {
+                    let badgeHtml = '';
+                    if (Number(recipe.is_public) === 0) {
+                        badgeHtml = '<span class="badge bg-secondary ms-2">súkromný</span>';
+                    }
+
+                    let descriptionHtml = '';
+                    if (recipe.description) {
+                        descriptionHtml =
+                            '<div class="text-muted small">' +
+                            escapeHtml(recipe.description) +
+                            '</div>';
+                    }
+
+                    resultHtml +=
+                        '<a class="list-group-item list-group-item-action" ' +
+                        'href="?c=recipe&a=show&id=' + Number(recipe.id) + '">' +
+                        '<div class="fw-semibold">' +
+                        escapeHtml(recipe.title) +
+                        badgeHtml +
+                        '</div>' +
+                        descriptionHtml +
+                        '</a>';
+                });
+                list.innerHTML = resultHtml;
+            }
+
+            async function fetchResults(query) {
+                try {
+                    const safeQuery = encodeURIComponent(query);
+
+                    const response = await fetch(
+                        `?c=recipe&a=search&q=${safeQuery}`,
+                        { headers: { Accept: 'application/json' } }
+                    );
+
+                    const data = await response.json();
+
+                    if (!response.ok || !data.ok) return;
+
+                    const items = Array.isArray(data.items) ? data.items : [];
+
+                    render(items);
+                } catch (error) {
+                }
+            }
+
+            function onSearchInput(event) {
+                clearTimeout(timer);
+
+                const valueFromInput = event.target.value;
+                const trimmedValue = valueFromInput.trim();
+
+                timer = setTimeout(function () {
+                    fetchResults(trimmedValue);
+                }, 200);
+            }
+            input.addEventListener('input', onSearchInput);
+        }
     }
 });

@@ -7,6 +7,7 @@ use Framework\Core\App;
 use Framework\Core\IAuthenticator;
 use Framework\Core\IIdentity;
 use Framework\Http\Session;
+use RuntimeException;
 
 abstract class SessionAuthenticator implements IAuthenticator
 {
@@ -50,7 +51,7 @@ abstract class SessionAuthenticator implements IAuthenticator
             return true;
         }
         elseif ($identity !== null) {
-            throw new \RuntimeException('Authenticated identity must implement IIdentity interface.');
+            throw new RuntimeException('Authenticated identity must implement IIdentity interface.');
         }
         return false;
     }
@@ -74,7 +75,7 @@ abstract class SessionAuthenticator implements IAuthenticator
     {
         $identity = $this->session->get(Configuration::IDENTITY_SESSION_KEY);
         if ($identity !== null && !($identity instanceof IIdentity)) {
-            throw new \RuntimeException('Stored identity must implement IIdentity interface.');
+            throw new RuntimeException('Stored identity must implement IIdentity interface.');
         }
         return new AppUser($identity);
     }
