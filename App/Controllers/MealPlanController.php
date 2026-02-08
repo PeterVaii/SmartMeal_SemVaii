@@ -2,7 +2,6 @@
 
 namespace App\Controllers;
 
-use App\Configuration;
 use App\Models\MealPlan;
 use App\Models\Recipe;
 use Exception;
@@ -39,10 +38,6 @@ class MealPlanController extends BaseController
      */
     public function index(Request $request): Response
     {
-        if (!$this->user->isLoggedIn()) {
-            return $this->redirect(Configuration::LOGIN_URL);
-        }
-
         $plans = MealPlan::getAll('`user_id` = ?', [$this->user->getId()]);
         $recipes = Recipe::getAll('`is_public` = 1 OR `user_id` = ?', [$this->user->getId()]);
 
@@ -54,12 +49,16 @@ class MealPlanController extends BaseController
      */
     public function add(Request $request): Response
     {
-        if (!$this->user->isLoggedIn()) {
-            return $this->redirect(Configuration::LOGIN_URL);
-        }
-
         $day = (string)$request->value('day');
         $recipeId = (int)$request->value('recipe_id');
+
+        $recipe = Recipe::getOne($recipeId);
+        if ($recipe === null) {
+            return $this->redirect($this->url('mealplan.index'));
+        }
+        if (!$recipe->getIsPublic() && $recipe->getUserId() !== $this->user->getId()) {
+            return $this->redirect($this->url('mealplan.index'));
+        }
 
         $mp = new MealPlan();
         $mp->setUserId($this->user->getId());
@@ -75,18 +74,11 @@ class MealPlanController extends BaseController
      */
     public function remove(Request $request): Response
     {
-        if (!$this->user->isLoggedIn()) {
-            return $this->redirect(Configuration::LOGIN_URL);
-        }
-
         $id = (int)$request->value('id');
         $mp = MealPlan::getOne($id);
 
-        if ($mp === null || $mp->getUserId() !== $this->user->getId()) {
-            return $this->redirect($this->url('mealplan.index'));
-        }
+        $mp?->delete();
 
-        $mp->delete();
         return $this->redirect($this->url('mealplan.index'));
     }
 }

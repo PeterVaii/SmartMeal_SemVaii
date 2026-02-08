@@ -19,7 +19,7 @@ use Framework\Support\LinkGenerator;
         </div>
     <?php } ?>
 
-    <form method="post" action="?c=recipe&a=create">
+    <form method="post" action="<?= $link->url('recipe.create') ?>">
         <div class="card mb-3">
             <div class="card-body">
                 <div class="mb-3">

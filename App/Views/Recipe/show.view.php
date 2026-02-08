@@ -21,10 +21,10 @@ use Framework\Support\LinkGenerator;
         <?php if ($user->isLoggedIn() && $user->getId() === $recipe->getUserId()) { ?>
             <div class="mb-3 d-flex gap-2">
                 <a class="btn btn-sm btn-outline-primary"
-                   href="?c=recipe&a=edit&id=<?= (int)$recipe->getId() ?>">Upraviť</a>
+                   href="<?= $link->url('recipe.edit', ['id' => (int)$recipe->getId()]) ?>">Upraviť</a>
 
                 <a class="btn btn-sm btn-outline-danger"
-                   href="?c=recipe&a=delete&id=<?= (int)$recipe->getId() ?>"
+                   href="<?= $link->url('recipe.delete', ['id' => (int)$recipe->getId()]) ?>"
                    onclick="return confirm('Naozaj chceš recept zmazať?');">
                     Zmazať
                 </a>

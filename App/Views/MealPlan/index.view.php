@@ -44,7 +44,7 @@ foreach ($plans as $p) {
                                 </span>
 
                                 <a class="btn btn-sm btn-outline-danger"
-                                   href="?c=mealplan&a=remove&id=<?= (int)$mp->getId() ?>"
+                                   href="<?= $link->url('mealplan.remove', ['id' => (int)$mp->getId()]) ?>"
                                    onclick="return confirm('Odstrániť recept z tohto dňa?');">
                                     ✕
                                 </a>
@@ -57,7 +57,7 @@ foreach ($plans as $p) {
                     </div>
                 <?php } ?>
 
-                <form method="post" action="?c=mealplan&a=add" class="d-flex gap-2 mealplan-form">
+                <form method="post" action="<?= $link->url('mealplan.add') ?>" class="d-flex gap-2 mealplan-form">
                     <input type="hidden" name="day" value="<?= $dayKey ?>">
 
                     <label>

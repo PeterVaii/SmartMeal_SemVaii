@@ -11,6 +11,20 @@ use Framework\Http\Responses\Response;
 
 class AuthController extends BaseController
 {
+    public function authorize(Request $request, string $action): bool
+    {
+        switch ($action) {
+            case 'index':
+            case 'login':
+            case 'register':
+                return true;
+            case 'logout':
+                return $this->user->isLoggedIn();
+            default:
+                return false;
+        }
+    }
+
     public function index(Request $request): Response
     {
         return $this->redirect(Configuration::LOGIN_URL);
@@ -21,6 +35,10 @@ class AuthController extends BaseController
      */
     public function login(Request $request): Response
     {
+        if ($this->user->isLoggedIn()) {
+            return $this->redirect($this->url("home.index"));
+        }
+
         $logged = null;
         if ($request->hasValue('submit')) {
             $logged = $this->app->getAuthenticator()->login($request->value('username'), $request->value('password'));
@@ -47,6 +65,10 @@ class AuthController extends BaseController
      */
     public function register(Request $request): Response
     {
+        if ($this->user->isLoggedIn()) {
+            return $this->redirect($this->url("home.index"));
+        }
+
         $message = null;
 
         if ($request->hasValue('submit')) {

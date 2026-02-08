@@ -26,6 +26,7 @@ class RecipeController extends BaseController
                 return $this->user->isLoggedIn();
             case 'show': {
                 $id = (int)$request->value('id');
+                if ($id <= 0) return false;
                 $recipe = Recipe::getOne($id);
 
                 if ($recipe === null) {
@@ -96,10 +97,6 @@ class RecipeController extends BaseController
      */
     public function create(Request $request): Response
     {
-        if (!$this->user->isLoggedIn()) {
-            return $this->redirect(Configuration::LOGIN_URL);
-        }
-
         $message = null;
 
         if ($request->hasValue('submit')) {

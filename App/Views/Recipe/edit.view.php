@@ -17,7 +17,7 @@ $e = fn($v) => htmlspecialchars((string)$v, ENT_QUOTES, 'UTF-8');
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h1 class="fw-bold mb-0">Upraviť recept</h1>
         <a class="btn btn-outline-secondary btn-sm"
-           href="?c=recipe&a=show&id=<?= (int)$recipe->getId() ?>">Späť</a>
+           href="<?= $link->url('recipe.show', ['id' => (int)$recipe->getId()]) ?>">Späť</a>
     </div>
 
     <?php if (!empty($message)): ?>
@@ -158,7 +158,7 @@ $e = fn($v) => htmlspecialchars((string)$v, ENT_QUOTES, 'UTF-8');
             Uložiť zmeny
         </button>
         <a class="btn btn-outline-secondary"
-           href="?c=recipe&a=show&id=<?= (int)$recipe->getId() ?>">
+           href="<?= $link->url('recipe.show', ['id' => (int)$recipe->getId()]) ?>">
             Zrušiť
         </a>
     </form>

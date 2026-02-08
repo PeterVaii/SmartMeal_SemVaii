@@ -2,7 +2,6 @@
 
 namespace App\Controllers;
 
-use App\Configuration;
 use App\Models\MealPlan;
 use App\Models\RecipeIngredient;
 use Exception;
@@ -13,15 +12,23 @@ use App\Models\ShoppingItem;
 
 class ShoppingItemController extends BaseController
 {
+    public function authorize(Request $request, string $action): bool
+    {
+        switch ($action) {
+            case 'index':
+                return $this->user->isLoggedIn();
+            case 'toggle':
+                return true;
+            default:
+                return false;
+        }
+    }
+
     /**
      * @throws Exception
      */
     public function index(Request $request): Response
     {
-        if (!$this->user->isLoggedIn()) {
-            return $this->redirect(Configuration::LOGIN_URL);
-        }
-
         $userId = (int)$this->user->getId();
 
         $recipeCounts = $this->getRecipeCountsForUser($userId);
