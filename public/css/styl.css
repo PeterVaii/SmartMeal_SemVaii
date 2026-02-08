@@ -6,6 +6,10 @@
     width: 50px;
 }
 
+.navbar .navbar-brand {
+    letter-spacing: 1px;
+}
+
 .shopping-item.checked {
     background-color: #f8f9fa;
 }
@@ -13,4 +17,82 @@
 .shopping-item.checked span {
     text-decoration: line-through;
     color: #6c757d;
+}
+
+.card {
+    border-color: #eee;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
+}
+
+.card .card-title {
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+}
+
+.card {
+    border-radius: 0.75rem;
+}
+
+#recipes-list .list-group-item:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.06);
+}
+
+#recipes-list .list-group-item {
+    transition: transform 0.08s ease, box-shadow 0.08s ease;
+}
+
+#recipe-search {
+    border-radius: 0.9rem;
+}
+
+.home-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.08);
+}
+
+.home-card {
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.home-alert {
+    border-radius: 1rem;
+    border-color: #e9ecef;
+}
+
+.mealplan-item:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.06);
+}
+
+.mealplan-item {
+    background: #fff;
+    border-color: #eee !important;
+    transition: transform 0.08s ease, box-shadow 0.08s ease;
+}
+
+.mealplan-day.card {
+    border-radius: 1.25rem;
+}
+
+.badge.bg-light.text-dark.border {
+    border-color: #e9ecef !important;
+    font-weight: 600;
+}
+
+h1.fw-bold {
+    letter-spacing: -0.2px;
+}
+
+.ingredient-row .remove-ingredient {
+    height: 100%;
+}
+
+.btn-primary {
+    font-weight: 600;
+    padding: 0.6rem;
+}
+
+.page-narrow {
+    max-width: 900px;
 }
