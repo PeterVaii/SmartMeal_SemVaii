@@ -88,9 +88,8 @@ h1.fw-bold {
     height: 100%;
 }
 
-.btn-primary {
-    font-weight: 600;
-    padding: 0.6rem;
+.ingredient-row .form-control {
+    height: 100%;
 }
 
 .page-narrow {
