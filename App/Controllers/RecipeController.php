@@ -16,6 +16,45 @@ class RecipeController extends BaseController
     /**
      * @throws Exception
      */
+    public function authorize(Request $request, string $action): bool
+    {
+        switch ($action) {
+            case 'index':
+            case 'search':
+                return true;
+            case 'create':
+                return $this->user->isLoggedIn();
+            case 'show': {
+                $id = (int)$request->value('id');
+                $recipe = Recipe::getOne($id);
+
+                if ($recipe === null) {
+                    return true;
+                }
+
+                if ($recipe->getIsPublic()) {
+                    return true;
+                }
+
+                return $this->user->isLoggedIn() && ($recipe->getUserId() === (int)$this->user->getId());
+            }
+            case 'edit':
+            case 'delete': {
+                if (!$this->user->isLoggedIn()) return false;
+
+                $id = (int)$request->value('id');
+                $recipe = Recipe::getOne($id);
+
+                return $recipe !== null && ($recipe->getUserId() === (int)$this->user->getId());
+            }
+            default:
+                return false;
+        }
+    }
+
+    /**
+     * @throws Exception
+     */
     public function index(Request $request): Response
     {
         $where = '`is_public` = 1';
